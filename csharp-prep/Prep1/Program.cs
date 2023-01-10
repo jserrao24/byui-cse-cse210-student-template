@@ -4,13 +4,20 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.Write("What is your frist name? ");
-        string  firstName= Console.ReadLine();
+        Console.Write("What is your grade? ");
+        string  userInput= Console.ReadLine();
+        int grade = int.Parse(userInput);
+        Console.Write(grade);
 
-        Console.Write("What is your last name? ");
-        string  lastName= Console.ReadLine();
+        if (grade >= 90 )
+{
+        Console.WriteLine("\nA");
+}
+        else if (grade < 80)
+{
+        Console.Write("\nB");
+}
 
-        Console.WriteLine($"It is {lastName}, {firstName} {lastName}");
 
     }
 }
