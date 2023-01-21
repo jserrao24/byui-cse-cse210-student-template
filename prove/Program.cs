@@ -1,8 +1,9 @@
 using System;
+using Journal;
 
 class Program
 {
-    static void Main(string[] args)
+    public static void Main(string[] args)
     {
         // Create a new journal
         Journal journal = new Journal();
