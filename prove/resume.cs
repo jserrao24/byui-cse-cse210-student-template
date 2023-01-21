@@ -20,3 +20,19 @@ public class Resume
         }
     }
 }
+
+
+/*
+using (StreamWriter sw = new StreamWriter(fileName))
+{
+    foreach (Entry entry in entries)
+    {
+        // Write prompt, response, and date to file
+        sw.WriteLine(entry.Prompt + "," + entry.Response + "," + entry.Date.ToString());
+    }
+    Console.WriteLine("Journal saved to file successfully.");
+}
+
+*/
+
+
