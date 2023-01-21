@@ -1,7 +1,7 @@
 using System;
 using Journal;
 
-class Program
+public class Program
 {
     public static void Main(string[] args)
     {
