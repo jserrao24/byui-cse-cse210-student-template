@@ -3,7 +3,7 @@ using Journal;
 
 public class Program
 {
-    public static void Main(string[] args)
+     static void Main(string[] args)
     {
         // Create a new journal
         Journal journal = new Journal();
