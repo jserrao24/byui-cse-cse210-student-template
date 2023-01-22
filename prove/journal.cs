@@ -54,28 +54,23 @@ public class Journal
                 Entry entry = new Entry(prompt, response, date);
                 entries.Add(entry);
             }
-        }
 
-        
-        
-    }
-        public class Prompts
+            
+        }
+        public void SaveToFile()
+{
+    // Get file name from user
+    Console.Write("Enter file name: ");
+    string fileName = Console.ReadLine();
+
+    using (StreamWriter sw = new StreamWriter(fileName))
     {
-        private static List<string> prompts = new List<string>()
+        foreach (Entry entry in entries)
         {
-            "What did you learn today?",
-            "What are you grateful for?",
-            "What is something you accomplished today?",
-            "What did you struggle with today?",
-            "What are your goals for tomorrow?"
-        };
-
-        public static string GetRandomPrompt()
-        {
-            Random random = new Random();
-            int index = random.Next(prompts.Count);
-            return prompts[index];
+            string line = entry.Prompt + "," + entry.Response + "," + entry.Date.ToString();
+            sw.WriteLine(line);
         }
     }
-
+    Console.WriteLine("Journal saved to file: " + fileName);
 }
+    }

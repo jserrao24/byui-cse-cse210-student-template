@@ -1,49 +1,119 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 
- class Program
+// Journal class to store entries and handle file operations
+class Journal
 {
-     static void Main(string[] args)
+    private List<Entry> entries;
+    public Journal()
     {
-        // Create a new journal
-        Journal journal = new Journal();
+        entries = new List<Entry>();
+    }
 
-        // Show menu to user
-        int choice = ShowMenu();
+    public void AddEntry(Entry entry)
+    {
+        entries.Add(entry);
+    }
 
-        while (choice != 5)
+    public void DisplayEntries()
+    {
+        foreach (Entry entry in entries)
         {
-            if (choice == 1)
-            {
-                // Write a new entry
-                journal.AddEntry(Prompts.GetRandomPrompt());
-            }
-            else if (choice == 2)
-            {
-                // Display journal
-                journal.DisplayEntries();
-            }
-            else if (choice == 3)
-            {
-                // Load journal from file
-                journal.LoadFromFile();
-            }
-            else if (choice == 4)
-            {
-                // Save journal to file
-                journal.SaveToFile();
-            }
-            choice = ShowMenu();
+            entry.Display();
         }
     }
 
-    static int ShowMenu()
+    public void SaveToFile(string filename)
     {
-        Console.WriteLine("1. Write a new entry");
-        Console.WriteLine("2. Display journal");
-        Console.WriteLine("3. Load journal from file");
-        Console.WriteLine("4. Save journal to file");
-        Console.WriteLine("5. Exit");
-        Console.Write("Enter your choice: ");
-        return int.Parse(Console.ReadLine());
+        using (StreamWriter writer = new StreamWriter(filename))
+        {
+            foreach (Entry entry in entries)
+            {
+                writer.WriteLine(entry.ToString());
+            }
+        }
+    }
+
+    public void LoadFromFile(string filename)
+    {
+        using (StreamReader reader = new StreamReader(filename))
+        {
+            entries.Clear();
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                Entry entry = Entry.FromString(line);
+                entries.Add(entry);
+            }
+        }
     }
 }
+
+// Entry class to store a single entry's data
+class Entry
+{
+    private string prompt;
+    private string response;
+    private DateTime date;
+
+    public Entry(string prompt, string response)
+    {
+        this.prompt = prompt;
+        this.response = response;
+        date = DateTime.Now;
+    }
+
+    public void Display()
+    {
+        Console.WriteLine("Prompt: " + prompt);
+        Console.WriteLine("Response: " + response);
+        Console.WriteLine("Date: " + date);
+    }
+
+    public override string ToString()
+    {
+        return prompt + "," + response + "," + date;
+    }
+
+    public static Entry FromString(string line)
+    {
+        string[] parts = line.Split(',');
+        return new Entry(parts[0], parts[1]);
+    }
+}
+
+// PromptGenerator class to generate prompts
+class PromptGenerator
+{
+    private static List<string> prompts = new List<string>()
+    {
+        "Who was the most interesting person I interacted with today?",
+        "What was the best part of my day?",
+        "How did I see the hand of the Lord in my life today?",
+        "What was the strongest emotion I felt today?",
+        "If I had one thing I could do over today, what would it be?"
+    };
+
+    public static string GetRandomPrompt()
+    {
+        Random rand = new Random();
+        int index = rand.Next(prompts.Count);
+        return prompts[index];
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Journal journal = new Journal();
+
+        while (true)
+        {
+            Console.WriteLine("Journal Menu:");
+            Console.WriteLine("1. Write a new entry");
+            Console.WriteLine("2. Display the journal");
+            Console.WriteLine("3. Save the journal to a file");
+            Console.Write
+
