@@ -2,106 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-// Journal class to store entries and handle file operations
-class Journal
-{
-    private List<Entry> entries;
-    public Journal()
-    {
-        entries = new List<Entry>();
-    }
 
-    public void AddEntry(Entry entry)
-    {
-        entries.Add(entry);
-    }
-
-    public void DisplayEntries()
-    {
-        foreach (Entry entry in entries)
-        {
-            entry.Display();
-        }
-    }
-
-    public void SaveToFile(string filename)
-    {
-        using (StreamWriter writer = new StreamWriter(filename))
-        {
-            foreach (Entry entry in entries)
-            {
-                writer.WriteLine(entry.ToString());
-            }
-        }
-    }
-
-    public void LoadFromFile(string filename)
-    {
-        using (StreamReader reader = new StreamReader(filename))
-        {
-            entries.Clear();
-            string line;
-            while ((line = reader.ReadLine()) != null)
-            {
-                Entry entry = Entry.FromString(line);
-                entries.Add(entry);
-            }
-        }
-    }
-}
-
-// Entry class to store a single entry's data
-class Entry
-{
-    private string prompt;
-    private string response;
-    private DateTime date;
-
-    public Entry(string prompt, string response)
-    {
-        this.prompt = prompt;
-        this.response = response;
-        date = DateTime.Now;
-    }
-
-    public void Display()
-    {
-        Console.WriteLine("Prompt: " + prompt);
-        Console.WriteLine("Response: " + response);
-        Console.WriteLine("Date: " + date);
-    }
-
-    public override string ToString()
-    {
-        return prompt + "," + response + "," + date;
-    }
-
-    public static Entry FromString(string line)
-    {
-        string[] parts = line.Split(',');
-        return new Entry(parts[0], parts[1]);
-    }
-}
-
-// PromptGenerator class to generate prompts
-class PromptGenerator
-{
-    private static List<string> prompts = new List<string>()
-    {
-        "Who was the most interesting person I interacted with today?",
-        "What was the best part of my day?",
-        "How did I see the hand of the Lord in my life today?",
-        "What was the strongest emotion I felt today?",
-        "If I had one thing I could do over today, what would it be?"
-    };
-
-    public static string GetRandomPrompt()
-    {
-        Random rand = new Random();
-        int index = rand.Next(prompts.Count);
-        return prompts[index];
-    }
-}
 
 class Program
 {
@@ -115,5 +16,42 @@ class Program
             Console.WriteLine("1. Write a new entry");
             Console.WriteLine("2. Display the journal");
             Console.WriteLine("3. Save the journal to a file");
-            Console.Write
-
+            Console.Writeine("4. Load the journal from a file");
+            Console.WriteLine("5. Exit");
+            Console.Write("Enter a selection: ");
+            string selection = Console.ReadLine();
+              if (selection == "1")
+        {
+            string prompt = PromptGenerator.GetRandomPrompt();
+            Console.Write("Enter your response: ");
+            string response = Console.ReadLine();
+            Entry entry = new Entry(prompt, response);
+            journal.AddEntry(entry);
+        }
+        else if (selection == "2")
+        {
+            journal.DisplayEntries();
+        }
+        else if (selection == "3")
+        {
+            Console.Write("Enter a file name: ");
+            string filename = Console.ReadLine();
+            journal.SaveToFile(filename);
+        }
+        else if (selection == "4")
+        {
+            Console.Write("Enter a file name: ");
+            string filename = Console.ReadLine();
+            journal.LoadFromFile(filename);
+        }
+        else if (selection == "5")
+        {
+            break;
+        }
+        else
+        {
+            Console.WriteLine("Invalid selection. Please try again.");
+        }
+    }
+}
+}
