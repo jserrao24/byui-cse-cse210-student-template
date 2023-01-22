@@ -1,76 +1,104 @@
- using System;
- using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
-
-public class Journal
-
-
-
+// Journal class to store entries and handle file operations
+class Journal
 {
-    public List<Entry> entries = new List<Entry>();
-
-    public void AddEntry(string prompt)
+    private List<Entry> entries;
+    public Journal()
     {
-        // Get user response
-        Console.Write(prompt + ": ");
-        string response = Console.ReadLine();
+        entries = new List<Entry>();
+    }
 
-        // Create new entry and add to journal
-        Entry entry = new Entry(prompt, response, DateTime.Now);
+    public void AddEntry(Entry entry)
+    {
         entries.Add(entry);
     }
 
     public void DisplayEntries()
     {
-        // Iterate through all entries and display them
         foreach (Entry entry in entries)
         {
-            Console.WriteLine(entry.ToString());
+            entry.Display();
         }
     }
 
-    public void LoadFromFile()
+    public void SaveToFile(string filename)
     {
-        // Get file name from user
-        Console.Write("Enter file name: ");
-        string fileName = Console.ReadLine();
-
-        // Clear current journal
-        entries.Clear();
-
-        // Load journal from file
-        using (StreamReader sr = new StreamReader(fileName))
+        using (StreamWriter writer = new StreamWriter(filename))
         {
-            string line;
-            while ((line = sr.ReadLine()) != null)
+            foreach (Entry entry in entries)
             {
-                // Split line into prompt, response, and date
-                string[] parts = line.Split(',');
-                string prompt = parts[0];
-                string response = parts[1];
-                DateTime date = DateTime.Parse(parts[2]);
+                writer.WriteLine(entry.ToString());
+            }
+        }
+    }
 
-                // Create new entry and add to journal
-                Entry entry = new Entry(prompt, response, date);
+    public void LoadFromFile(string filename)
+    {
+        using (StreamReader reader = new StreamReader(filename))
+        {
+            entries.Clear();
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                Entry entry = Entry.FromString(line);
                 entries.Add(entry);
             }
-
-            
-        }
-        public void SaveToFile()
-{
-    // Get file name from user
-    Console.Write("Enter file name: ");
-    string fileName = Console.ReadLine();
-
-    using (StreamWriter sw = new StreamWriter(fileName))
-    {
-        foreach (Entry entry in entries)
-        {
-            string line = entry.Prompt + "," + entry.Response + "," + entry.Date.ToString();
-            sw.WriteLine(line);
         }
     }
-    Console.WriteLine("Journal saved to file: " + fileName);
 }
+
+// Entry class to store a single entry's data
+class Entry
+{
+    private string prompt;
+    private string response;
+    private DateTime date;
+
+    public Entry(string prompt, string response)
+    {
+        this.prompt = prompt;
+        this.response = response;
+        date = DateTime.Now;
     }
+
+    public void Display()
+    {
+        Console.WriteLine("Prompt: " + prompt);
+        Console.WriteLine("Response: " + response);
+        Console.WriteLine("Date: " + date);
+    }
+
+    public override string ToString()
+    {
+        return prompt + "," + response + "," + date;
+    }
+
+    public static Entry FromString(string line)
+    {
+        string[] parts = line.Split(',');
+        return new Entry(parts[0], parts[1]);
+    }
+}
+
+// PromptGenerator class to generate prompts
+class PromptGenerator
+{
+    private static List<string> prompts = new List<string>()
+    {
+        "Who was the most interesting person I interacted with today?",
+        "What was the best part of my day?",
+        "How did I see the hand of the Lord in my life today?",
+        "What was the strongest emotion I felt today?",
+        "If I had one thing I could do over today, what would it be?"
+    };
+
+    public static string GetRandomPrompt()
+    {
+        Random rand = new Random();
+        int index = rand.Next(prompts.Count);
+        return prompts[index];
+    }
+}
