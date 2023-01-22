@@ -3,6 +3,9 @@
 
 
 public class Journal
+
+
+
 {
     public List<Entry> entries = new List<Entry>();
 
@@ -52,6 +55,8 @@ public class Journal
                 entries.Add(entry);
             }
         }
+
+        
         
     }
         public class Prompts
