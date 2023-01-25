@@ -23,6 +23,7 @@ class Program
               if (selection == "1")
         {
             string prompt = PromptGenerator.GetRandomPrompt();
+            Console.WriteLine(prompt);
             Console.Write("Enter your response: ");
             string response = Console.ReadLine();
             Entry entry = new Entry(prompt, response);
