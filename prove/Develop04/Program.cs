@@ -23,19 +23,19 @@ class Program
             if (input == "1")
             {
                 // Run breathing activity
-                BreathingActivity breathingActivity = new BreathingActivity(60);
+                BreathingActivity breathingActivity = new BreathingActivity(3);
                 breathingActivity.RunActivity();
             }
             else if (input == "2")
             {
                 // Run reflection activity
-                ReflectionActivity reflectionActivity = new ReflectionActivity(120);
+                ReflectionActivity reflectionActivity = new ReflectionActivity(3);
                 reflectionActivity.RunActivity();
             }
             else if (input == "3")
             {
                 // Run listing activity
-                ListingActivity listingActivity = new ListingActivity(180);
+                ListingActivity listingActivity = new ListingActivity(3);
                 listingActivity.RunActivity();
             }
             else if (input == "4")
