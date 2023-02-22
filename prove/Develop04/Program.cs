@@ -15,7 +15,8 @@ class Program
             Console.WriteLine("\nPlease choose an activity:");
             Console.WriteLine("1. Breathing Activity");
             Console.WriteLine("2. Reflection Activity");
-            Console.WriteLine("3. Exit");
+            Console.WriteLine("3. Listing Activity");
+            Console.WriteLine("4. Exit");
             Console.Write("Enter your choice: ");
             string input = Console.ReadLine();
 
@@ -32,6 +33,12 @@ class Program
                 reflectionActivity.RunActivity();
             }
             else if (input == "3")
+            {
+                // Run listing activity
+                ListingActivity listingActivity = new ListingActivity(180);
+                listingActivity.RunActivity();
+            }
+            else if (input == "4")
             {
                 // Exit the app
                 Console.WriteLine("Thank you for using the Mindfulness App. Goodbye!");

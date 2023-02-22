@@ -109,10 +109,59 @@ namespace MindfulnessApp
             }
         }
 
+        
+
     EndActivity();
    
 
 }
+
+// Listing Activity class
+class ListingActivity : MindfulnessActivity
+{
+private List<string> prompts;
+
+ // Constructor to set duration, description, and prompts
+    public ListingActivity(int duration)
+    {
+        this.duration = duration;
+        this.description = "Listing Activity";
+        this.prompts = new List<string> { "Who are people that you appreciate?", "What are personal strengths of yours?", "Who are people that you have helped this week?", "When have you felt the Holy Ghost this month?", "Who are some of your personal heroes?" };
+    }
+
+    // Function to run the activity
+    public void RunActivity()
+    {
+        StartActivity();
+
+        Console.WriteLine("This activity will help you reflect on the good things in your life by having you list as many things as you can in a certain area.");
+
+        // Select a random prompt
+        Random rand = new Random();
+        string prompt = prompts[rand.Next(prompts.Count)];
+        Console.WriteLine(prompt);
+
+        int count = duration / 5; // Display prompt for 5 seconds, then give user 5 seconds to list items
+        for (int i = 0; i < count; i++)
+        {
+            System.Threading.Thread.Sleep(5000); // Give user 5 seconds to think about prompt
+            Console.WriteLine("Go!");
+            int itemcount = 0;
+            DateTime start = DateTime.Now;
+            while ((DateTime.Now - start).TotalSeconds < 5) // Give user 5 seconds to list items
+            {
+                string item = Console.ReadLine();
+                if (item == "")
+                    break;
+                itemcount++;
+            }
+            Console.WriteLine("You listed {0} items.", itemcount);
+        }
+
+        EndActivity();
+    }
+}
+
 }
 
 }
