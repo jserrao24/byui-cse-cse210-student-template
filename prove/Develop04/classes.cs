@@ -116,6 +116,8 @@ namespace MindfulnessApp
 
 }
 
+
+}
 // Listing Activity class
 class ListingActivity : MindfulnessActivity
 {
@@ -160,8 +162,6 @@ private List<string> prompts;
 
         EndActivity();
     }
-}
-
 }
 
 }
