@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace MindfulnessApp
 {
+    
     // Parent class for all mindfulness activities
     class MindfulnessActivity
     {
@@ -108,6 +109,10 @@ namespace MindfulnessApp
             }
         }
 
-        EndActivity();
-    }
+    EndActivity();
+   
+
+}
+}
+
 }
