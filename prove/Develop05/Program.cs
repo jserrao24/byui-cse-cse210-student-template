@@ -168,7 +168,40 @@ public void DisplayProgress()
 // Method for saving goals and score to a file
 public void SaveToFile()
 {
-    // code to save goals and score to a file
+    // Create a file stream and a stream writer to write to the file
+    using (FileStream fileStream = new FileStream("goals.txt", FileMode.Create))
+    using (StreamWriter streamWriter = new StreamWriter(fileStream))
+    {
+        // Write the total score to the first line of the file
+        streamWriter.WriteLine(score);
+
+        // Write each goal to the file in CSV format
+        foreach (Activity activity in activities)
+        {
+            string goalType;
+            if (activity is SimpleGoal)
+            {
+                goalType = "Simple";
+            }
+            else if (activity is EternalGoal)
+            {
+                goalType = "Eternal";
+            }
+            else if (activity is ChecklistGoal)
+            {
+                goalType = "Checklist";
+            }
+            else
+            {
+                goalType = "Unknown";
+            }
+
+            string line = $"{activity.Name},{activity.PointValue},{goalType}";
+            streamWriter.WriteLine(line);
+        }
+    }
+
+    Console.WriteLine("Goals and score saved to file.");
 }
 
 // Method for loading goals and score from a file
