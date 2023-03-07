@@ -1,35 +1,222 @@
 using System;
+using System.Collections.Generic;
 
-// Main program
-public class Program {
-    static void Main() {
-        List<Goal> goals = new List<Goal>();
+// Define the base class for all activities
+public abstract class Activity
+{
+    // Fields
+    private string name;
+    private int pointValue;
 
-        // Add some example goals
-        goals.Add(new SimpleGoal("Run a marathon", 1000));
-        goals.Add(new EternalGoal("Read scriptures", 100));
-        goals.Add(new ChecklistGoal("Attend the temple", 50, 10));
-
-        // Record progress towards goals
-        goals[0].RecordEvent(); // Complete marathon
-        goals[1].RecordEvent(); // Read scriptures
-        goals[1].RecordEvent(); // Read scriptures again
-        goals[2].RecordEvent(); // Attend the temple
-        goals[2].RecordEvent();
-        goals[2].RecordEvent(); // Attend the temple again
-        goals[2].RecordEvent(); // Attend the temple again
-        goals[2].RecordEvent(); // Attend the temple again
-        goals[2].RecordEvent(); // Attend the temple again
-        goals[2].RecordEvent(); // Attend the temple again
-        goals[2].RecordEvent(); // Attend the temple again
-        goals[2].RecordEvent(); // Attend the temple again
-        goals[2].RecordEvent(); // Attend the temple again (should trigger bonus)
-
-    // Display goal list and total score
-    int totalScore = 0;
-    foreach (Goal goal in goals) {
-        Console.WriteLine(goal);
-        totalScore += goal.PointValue * (goal is ChecklistGoal ? ((ChecklistGoal)goal).TimesCompleted >= ((ChecklistGoal)goal).TargetCount ? ((ChecklistGoal)goal).TargetCount : ((ChecklistGoal)goal).TimesCompleted : ((EternalGoal)goal).TimesCompleted + (goal is SimpleGoal && ((SimpleGoal)goal).IsComplete ? 1 : 0));
+    // Properties
+    public string Name
+    {
+        get { return name; }
+        set { name = value; }
     }
-    Console.WriteLine($"Total score: {totalScore}");
+
+    public int PointValue
+    {
+        get { return pointValue; }
+        set { pointValue = value; }
+    }
+
+    // Constructor
+    public Activity(string name, int pointValue)
+    {
+        this.name = name;
+        this.pointValue = pointValue;
+    }
+
+    // Abstract method for recording an event
+    public abstract void RecordEvent();
+
+    // Virtual method for displaying progress
+    public virtual string DisplayProgress()
+    {
+        return $"Activity: {name}, Points: {pointValue}";
+    }
+}
+
+// Define a class for simple goals
+public class SimpleGoal : Activity
+{
+    // Constructor
+    public SimpleGoal(string name, int pointValue) : base(name, pointValue) {}
+
+    // Method for recording an event
+    public override void RecordEvent()
+    {
+        PointValue += 1000;
+    }
+}
+
+// Define a class for eternal goals
+public class EternalGoal : Activity
+{
+    // Constructor
+    public EternalGoal(string name, int pointValue) : base(name, pointValue) {}
+
+    // Method for recording an event
+    public override void RecordEvent()
+    {
+        PointValue += 100;
+    }
+}
+
+// Define a class for checklist goals
+public class ChecklistGoal : Activity
+{
+    // Fields
+    private int numTimesCompleted;
+    private int numTimesRequired;
+
+    // Constructor
+    public ChecklistGoal(string name, int pointValue, int numTimesRequired) : base(name, pointValue)
+    {
+        this.numTimesCompleted = 0;
+        this.numTimesRequired = numTimesRequired;
+    }
+
+    // Method for recording an event
+    public override void RecordEvent()
+    {
+        PointValue += 50;
+        numTimesCompleted++;
+        if (numTimesCompleted == numTimesRequired)
+        {
+            PointValue += 500;
+        }
+    }
+
+    // Override method for displaying progress
+    public override string DisplayProgress()
+    {
+        return $"Activity: {Name}, Points: {PointValue}, Completed: {numTimesCompleted}/{numTimesRequired}";
+    }
+}
+
+// Define the main program class
+public class Program
+{
+    // Fields
+    private List<Activity> activities;
+    private int score;
+
+    // Constructor
+    public Program()
+    {
+        this.activities = new List<Activity>();
+        this.score = 0;
+    }
+
+    // Method for creating a new goal
+    public void CreateNewGoal()
+    {
+        Console.Write("Enter the goal name: ");
+        string name = Console.ReadLine();
+        Console.Write("Enter the point value: ");
+        int pointValue = int.Parse(Console.ReadLine());
+        Console.WriteLine("Choose the goal type:");
+        Console.WriteLine("1. Simple goal");
+        Console.WriteLine("2. Eternal goal");
+        Console.WriteLine("3. Checklist goal");
+        int choice = int.Parse(Console.ReadLine());
+        switch (choice)
+        {
+            case 1:
+                activities.Add(new SimpleGoal(name, pointValue));
+                break;
+            case 2:
+                activities.Add(new EternalGoal(name, pointValue));
+                break;
+            case 3:
+                Console.Write("Enter the number of times required: ");
+                int numTimesRequired = int.Parse(Console.ReadLine());
+                activities.Add(new ChecklistGoal(name, pointValue, numTimesRequired));
+                break;
+            default:
+                Console.WriteLine("Invalid choice.");
+                break;
+
+    }
+}
+
+// Method for recording an event
+public void RecordEvent()
+{
+    Console.WriteLine("Choose the activity:");
+    for (int i = 0; i < activities.Count; i++)
+    {
+        Console.WriteLine($"{i + 1}. {activities[i].Name}");
+    }
+    int choice = int.Parse(Console.ReadLine()) - 1;
+    activities[choice].RecordEvent();
+    score += activities[choice].PointValue;
+}
+
+// Method for displaying progress
+public void DisplayProgress()
+{
+    Console.WriteLine($"Current score: {score}");
+    for (int i = 0; i < activities.Count; i++)
+    {
+        Console.WriteLine(activities[i].DisplayProgress());
+    }
+}
+
+// Method for saving goals and score to a file
+public void SaveToFile()
+{
+    // code to save goals and score to a file
+}
+
+// Method for loading goals and score from a file
+public void LoadFromFile()
+{
+    // code to load goals and score from a file
+}
+
+// Main method
+public static void Main()
+{
+    Program program = new Program();
+    bool done = false;
+    while (!done)
+    {
+        Console.WriteLine("Choose an option:");
+        Console.WriteLine("1. Create new goal");
+        Console.WriteLine("2. Record event");
+        Console.WriteLine("3. Display progress");
+        Console.WriteLine("4. Save to file");
+        Console.WriteLine("5. Load from file");
+        Console.WriteLine("6. Quit");
+        int choice = int.Parse(Console.ReadLine());
+        switch (choice)
+        {
+            case 1:
+                program.CreateNewGoal();
+                break;
+            case 2:
+                program.RecordEvent();
+                break;
+            case 3:
+                program.DisplayProgress();
+                break;
+            case 4:
+                program.SaveToFile();
+                break;
+            case 5:
+                program.LoadFromFile();
+                break;
+            case 6:
+                done = true;
+                break;
+            default:
+                Console.WriteLine("Invalid choice.");
+                break;
+        }
+    }
+}
+
 }
