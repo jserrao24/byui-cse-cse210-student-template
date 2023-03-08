@@ -93,14 +93,20 @@ public void SaveToFile()
             else if (activity is ChecklistGoal)
             {
                 goalType = "Checklist";
+                int numTimesRequired = ((ChecklistGoal)activity).NumTimesRequired;
+                string line = $"{activity.Name},{activity.PointValue},{goalType},{numTimesRequired}";
+                streamWriter.WriteLine(line);
             }
             else
             {
                 goalType = "Unknown";
             }
 
-            string line = $"{activity.Name},{activity.PointValue},{goalType}";
-            streamWriter.WriteLine(line);
+            if (goalType != "Checklist")
+            {
+                string line = $"{activity.Name},{activity.PointValue},{goalType}";
+                streamWriter.WriteLine(line);
+            }
         }
     }
 
@@ -110,7 +116,47 @@ public void SaveToFile()
 // Method for loading goals and score from a file
 public void LoadFromFile()
 {
-    // code to load goals and score from a file
+    // Create a file stream and a stream reader to read from the file
+    string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "goals.txt");
+    using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
+    using (StreamReader streamReader = new StreamReader(fileStream))
+    {
+        // Read the first line of the file to get the total score
+        string totalScoreStr = streamReader.ReadLine();
+        int.TryParse(totalScoreStr, out score);
+
+        // Read each line of the file to create the corresponding goal objects
+        string line;
+        while ((line = streamReader.ReadLine()) != null)
+        {
+            string[] parts = line.Split(',');
+
+            string name = parts[0];
+            int pointValue;
+            int.TryParse(parts[1], out pointValue);
+
+            if (parts[2] == "Simple")
+            {
+                SimpleGoal goal = new SimpleGoal(name, pointValue);
+                activities.Add(goal);
+            }
+            else if (parts[2] == "Eternal")
+            {
+                EternalGoal goal = new EternalGoal(name, pointValue);
+                activities.Add(goal);
+            }
+            else if (parts[2] == "Checklist")
+            {
+                int numTimesRequired;
+                int.TryParse(parts[3], out numTimesRequired);
+
+                ChecklistGoal goal = new ChecklistGoal(name, pointValue, numTimesRequired);
+                activities.Add(goal);
+            }
+        }
+    }
+
+    Console.WriteLine("Goals and score loaded from file.");
 }
 
 // Main method
