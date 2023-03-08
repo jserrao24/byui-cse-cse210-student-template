@@ -93,20 +93,14 @@ public void SaveToFile()
             else if (activity is ChecklistGoal)
             {
                 goalType = "Checklist";
-                int numTimesRequired = ((ChecklistGoal)activity).NumTimesRequired;
-                string line = $"{activity.Name},{activity.PointValue},{goalType},{numTimesRequired}";
-                streamWriter.WriteLine(line);
             }
             else
             {
                 goalType = "Unknown";
             }
 
-            if (goalType != "Checklist")
-            {
-                string line = $"{activity.Name},{activity.PointValue},{goalType}";
-                streamWriter.WriteLine(line);
-            }
+            string line = $"{activity.Name},{activity.PointValue},{goalType}";
+            streamWriter.WriteLine(line);
         }
     }
 
