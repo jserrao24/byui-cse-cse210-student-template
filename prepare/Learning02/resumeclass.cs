@@ -1,9 +1,5 @@
 using System;
 
-
-/*
-using System;
-
 public class Resume
 {
     public string _name;
@@ -25,4 +21,4 @@ public class Resume
     }
 }
 
- */
+

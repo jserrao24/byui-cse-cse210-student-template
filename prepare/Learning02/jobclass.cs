@@ -1,16 +1,4 @@
-using System
 
-public class job
-{
-public string _jobTitle;
-public string _company
-
-
-
-}
-
-
-/*
 using System;
 
 public class Job
@@ -25,4 +13,3 @@ public class Job
         Console.WriteLine($"{_jobTitle} ({_company}) {_startYear}-{_endYear}");
     }
 }
-*/
