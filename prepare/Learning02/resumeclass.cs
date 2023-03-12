@@ -1,70 +1,28 @@
 using System;
 
-public class Job
+
+/*
+using System;
+
+public class Resume
 {
-    public string _jobTitle;
-    public string _company;
-    public int _startYear;
-    public int _endYear;
+    public string _name;
+
+    // Make sure to initialize your list to a new List before you use it.
+    public List<Job> _jobs = new List<Job>();
 
     public void Display()
     {
-        Console.WriteLine($"{_jobTitle} ({_company}) {_startYear}-{_endYear}");
+        Console.WriteLine($"Name: {_name}");
+        Console.WriteLine("Jobs:");
+
+        // Notice the use of the custom data type "Job" in this loop
+        foreach (Job job in _jobs)
+        {
+            // This calls the Display method on each job
+            job.Display();
+        }
     }
 }
-
-
-/*
-class Journal
-{
-    private List<Entry> entries = new List<Entry>();
-
-    public void AddEntry(string prompt)
-    {
-        // Get user response
-        Console.Write(prompt + ": ");
-        string response = Console.ReadLine();
-
-        // Create new entry and add to journal
-        Entry entry = new Entry(prompt, response, DateTime.Now);
-        entries.Add(entry);
-    }
-
-    public void DisplayEntries()
-    {
-        // Iterate through all entries and display them
-        foreach (Entry entry in entries)
-        {
-            Console.WriteLine(entry.ToString());
-        }
-    }
-
-    public void LoadFromFile()
-    {
-        // Get file name from user
-        Console.Write("Enter file name: ");
-        string fileName = Console.ReadLine();
-
-        // Clear current journal
-        entries.Clear();
-
-        // Load journal from file
-        using (StreamReader sr = new StreamReader(fileName))
-        {
-            string line;
-            while ((line = sr.ReadLine()) != null)
-            {
-                // Split line into prompt, response, and date
-                string[] parts = line.Split(',');
-                string prompt = parts[0];
-                string response = parts[1];
-                DateTime date = DateTime.Parse(parts[2]);
-
-                // Create new entry and add to journal
-                Entry entry = new Entry(prompt, response, date);
-                entries.Add(entry);
-            }
-        }
-    }
 
  */
