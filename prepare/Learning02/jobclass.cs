@@ -1,6 +1,13 @@
 using System
 
 public class job
+{
+public string _jobTitle;
+public string _company
+
+
+
+}
 
 
 /*
