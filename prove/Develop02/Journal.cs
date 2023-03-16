@@ -1,6 +1,10 @@
 
+public class journal{
+
+}
    
 /*
+    Mehtods
     Adding an entry
     Displaying all the entries
     Saving to a file
