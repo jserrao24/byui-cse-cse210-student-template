@@ -43,7 +43,9 @@ public class Fraction{
             {
                 _bottom = bottom;
             }
-
-
-
+ // ToString method
+    public override string ToString()
+    {
+        return $"{_top}/{_bottom}";
+    }
 }
