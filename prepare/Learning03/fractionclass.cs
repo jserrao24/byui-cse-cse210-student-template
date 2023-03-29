@@ -18,6 +18,7 @@ public class Fraction{
 
         public Fraction( int top, int bottom)
    {
+    // Set the top of the stack
     _top = top;
     _bottom = bottom;      
     }
