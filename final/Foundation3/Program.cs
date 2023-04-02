@@ -12,7 +12,7 @@ public class Program
 
         Reception reception = new Reception("Networking Mixer", "Meet other professionals in your industry", new DateTime(2023, 5, 20, 18, 0, 0), address2, "rsvp@example.com");
 
-        OutdoorGathering outdoorGathering = new OutdoorGathering("Summer Picnic", "Enjoy a fun day outdoors with friends and family", new DateTime(2023, 7, 4, 12, 0, 0), address3);
+        OutdoorGathering outdoorGathering = new OutdoorGathering("Summer Picnic", "Enjoy a fun day outdoors with friends and family", new DateTime(2023, 7, 4, 12, 0, 0), address3, "Sunny");
         
             // Call methods for each event
         Console.WriteLine("Standard Details for Lecture:");
