@@ -1,7 +1,7 @@
 public abstract class Activity
 {
     private DateTime date;
-    private int durationInMinutes;
+    public int durationInMinutes;
 
     public Activity(DateTime date, int durationInMinutes)
     {
