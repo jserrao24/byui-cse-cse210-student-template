@@ -37,4 +37,3 @@ class Comment
     }
 }
 
-This program creates a list of videos, adds 3-4 comments to each video, and then iterates through the list to display the video information and comments for each video.
