@@ -1,3 +1,6 @@
+
+using System;
+
 public class Program
 {
     public static void Main()
@@ -13,8 +16,7 @@ public class Program
         Console.WriteLine(order1.GetPackingLabel());
         Console.WriteLine("Shipping label:");
         Console.WriteLine(order1.GetShippingLabel());
-
-        Address address2 = new Address("456 Oak St", "Othertown", "TX", "USA");
+          Address address2 = new Address("456 Oak St", "Othertown", "TX", "USA");
         Customer customer2 = new Customer("Jane Smith", address2);
         Product[] products2 = { new Product("Product 3", 3, 7.99, 1), new Product("Product 4", 4, 15.75, 2), new Product("Product 5", 5, 20.00, 1) };
         Order order2 = new Order(customer2, products2);
@@ -25,3 +27,6 @@ public class Program
         Console.WriteLine(order2.GetPackingLabel());
         Console.WriteLine("Shipping label:");
         Console.WriteLine(order2.GetShippingLabel());
+}
+
+}
